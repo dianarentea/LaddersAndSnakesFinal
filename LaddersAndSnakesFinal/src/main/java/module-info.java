@@ -14,4 +14,6 @@ module com.example.laddersandsnakesfinal {
 
     opens com.example.laddersandsnakesfinal to javafx.fxml;
     exports com.example.laddersandsnakesfinal;
+    exports com.example.laddersandsnakesfinal.Controller;
+    opens com.example.laddersandsnakesfinal.Controller to javafx.fxml;
 }
