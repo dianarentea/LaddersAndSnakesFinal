@@ -1,42 +1,15 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
-import com.example.laddersandsnakesfinal.Model.Interfaces.ISnake;
-import com.example.laddersandsnakesfinal.Model.Interfaces.ITile;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Snake implements ISnake {
+public class Snake{
 
-    private ITile startTile;
-    private ITile endTile;
+    private Tile startTile;
+    private Tile endTile;
 
-    @Override
-    public void setStartTile(ITile tile) {
-        this.startTile = tile;
-    }
-
-    @Override
-    public void setEndTile(ITile tile) {
-        this.endTile = tile;
-    }
-
-    @Override
-    public int getStartTile() {
-        return startTile.getTileNumber();
-    }
-    @Override
-    public int getEndTile() {
-        return endTile.getTileNumber();
-    }
-
-    @Override
-    public void display() {
-        System.out.println("Snake");
-        startTile.display();
-        endTile.display();
-    }
 }

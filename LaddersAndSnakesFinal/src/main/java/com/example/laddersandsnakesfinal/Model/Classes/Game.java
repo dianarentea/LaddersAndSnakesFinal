@@ -1,12 +1,8 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
-import com.example.laddersandsnakesfinal.Model.Interfaces.IGame;
-import com.example.laddersandsnakesfinal.Model.Interfaces.ILadder;
-import com.example.laddersandsnakesfinal.Model.Interfaces.ISnake;
-
 import java.util.Scanner;
 
-public class Game implements IGame {
+public class Game  {
     Dice dice=new Dice();
 
     Board board=new Board();
@@ -14,7 +10,6 @@ public class Game implements IGame {
     private int numberOfPlayers;
 
 
-    @Override
     public void joinGame()
     {
 
@@ -36,7 +31,6 @@ public class Game implements IGame {
 
     }
 
-    @Override
     public void chooseFirstPLayer()
     {
         Scanner sc = new Scanner(System.in);
@@ -57,7 +51,6 @@ public class Game implements IGame {
     }
 
 
-    @Override
     public void play() {
         board.displayBoard();
         joinGame();
@@ -78,5 +71,4 @@ public class Game implements IGame {
             }
         }
     }
-
 }

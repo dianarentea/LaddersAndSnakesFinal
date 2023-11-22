@@ -1,25 +1,26 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
-import com.example.laddersandsnakesfinal.Model.Interfaces.ILadder;
-import com.example.laddersandsnakesfinal.Model.Interfaces.ISnake;
-import com.example.laddersandsnakesfinal.Model.Interfaces.ITile;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
-public class Board extends BoardFactory{
+@Getter
+@Setter
+public class Board {
 
-    private ITile[] tiles;
-    private ISnake[] snakes;
-    private ILadder[] ladders;
+    private Tile[] tiles;
+    private Snake[] snakes;
+    private Ladder[] ladders;
 
 
-    public void initializeSnakes(ISnake[] snakes, int... positions) {
+    public void initializeSnakes(Snake[] snakes, int... positions) {
         if (snakes.length * 2 != positions.length) {
             throw new IllegalArgumentException("Number of positions does not match the number of snakes");
         }
 
         int positionIndex = 0;
-        for (ISnake snake : snakes) {
+        for (Snake snake : snakes) {
             snake=new Snake();
             int startTileNumber = positions[positionIndex++];
             int endTileNumber = positions[positionIndex++];
@@ -32,13 +33,13 @@ public class Board extends BoardFactory{
         }
        this.snakes=snakes;
     }
-    public void initializeLadders(ILadder[] ladders, int... positions) {
+    public void initializeLadders(Ladder[] ladders, int... positions) {
         if (ladders.length * 2 != positions.length) {
             throw new IllegalArgumentException("Number of positions does not match the number of ladders");
         }
 
         int positionIndex = 0;
-        for (ILadder ladder : ladders) {
+        for (Ladder ladder : ladders) {
             ladder = new Ladder();
             int startTileNumber = positions[positionIndex++];
             int endTileNumber = positions[positionIndex++];
@@ -57,9 +58,9 @@ public class Board extends BoardFactory{
         for (int i = 0; i < tiles.length; i++) {
             tiles[i] = new Tile(i + 1);
         }
-        ISnake[] snakes = new Snake[8];
+        Snake[] snakes = new Snake[8];
         initializeSnakes(snakes, 6, 3, 42, 19, 45, 36, 51, 13, 67, 54, 83, 62, 90, 87, 96, 66);
-        ILadder[] ladders = new Ladder[8];
+        Ladder[] ladders = new Ladder[8];
         initializeLadders(ladders, 5, 9, 15, 25, 18, 80, 44, 86, 47, 68, 63, 78, 71, 94, 81, 98);
     }
 
@@ -89,7 +90,7 @@ public class Board extends BoardFactory{
         }
     }
 
-    private String getTileRepresentation(ITile tile) {
+    private String getTileRepresentation(Tile tile) {
         if (tile.getTileNumber() == 0) {
             return "S";
         } else if (tile.getTileNumber() == -1) {
@@ -99,7 +100,7 @@ public class Board extends BoardFactory{
         }
     }
 
-    public ITile createTile(int number) {
+    public Tile createTile(int number) {
         return new Tile(number);
     }
 }
