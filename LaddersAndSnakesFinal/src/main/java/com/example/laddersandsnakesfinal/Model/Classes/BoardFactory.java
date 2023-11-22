@@ -1,6 +1,5 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
-import com.example.laddersandsnakesfinal.Model.Interfaces.IBoardFactory;
 import com.example.laddersandsnakesfinal.Model.Interfaces.ILadder;
 import com.example.laddersandsnakesfinal.Model.Interfaces.ISnake;
 import com.example.laddersandsnakesfinal.Model.Interfaces.ITile;
@@ -9,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public abstract class BoardFactory implements IBoardFactory {
+public abstract class BoardFactory  {
 
 
     public abstract ITile createTile();
