@@ -1,4 +1,17 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
-public class Player {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Player implements com.example.laddersandsnakesfinal.Model.Interfaces.Player {
+
+    private int idPLayer;
+    private String username;
+    private int currentPos;
+    private boolean isWinner;
+    private boolean isTurn;
 }
