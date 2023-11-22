@@ -17,6 +17,11 @@ public class Tile implements ITile {
     }
 
     @Override
+    public int getTileNumber() {
+        return tileNumber;
+    }
+
+    @Override
     public ITile createTile(int number) {
         return new Tile(number);
     }

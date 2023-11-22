@@ -12,16 +12,7 @@ public class Game implements IGame {
     Board board=new Board();
 
     private int numberOfPlayers;
-    @Override
-    public void InitializeBoard()
-    {
-        //se initializeaza serpii
-        ISnake[] snakes = new Snake[3];
-        board.initializeSnakes(snakes, 10,2,15,6);
-        //se initializeaza scari
-        ILadder[] ladders = new Ladder[3];
-        board.initializeLadders(ladders, 4,16,17,9);
-    }
+
 
     @Override
     public void joinGame()
@@ -68,6 +59,7 @@ public class Game implements IGame {
 
     @Override
     public void play() {
+        board.displayBoard();
         joinGame();
         chooseFirstPLayer();
         for (int i = 0; i < 10; i++) {
