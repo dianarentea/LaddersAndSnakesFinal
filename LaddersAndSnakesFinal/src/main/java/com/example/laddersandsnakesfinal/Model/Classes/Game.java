@@ -1,14 +1,27 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
 import com.example.laddersandsnakesfinal.Model.Interfaces.IGame;
+import com.example.laddersandsnakesfinal.Model.Interfaces.ILadder;
+import com.example.laddersandsnakesfinal.Model.Interfaces.ISnake;
 
 import java.util.Scanner;
 
 public class Game implements IGame {
     Dice dice=new Dice();
 
-    private int numberOfPlayers;
+    Board board=new Board();
 
+    private int numberOfPlayers;
+    @Override
+    public void InitializeBoard()
+    {
+        //se initializeaza serpii
+        ISnake[] snakes = new Snake[3];
+        board.initializeSnakes(snakes, 10,2,15,6);
+        //se initializeaza scari
+        ILadder[] ladders = new Ladder[3];
+        board.initializeLadders(ladders, 4,16,17,9);
+    }
 
     @Override
     public void joinGame()
@@ -51,6 +64,7 @@ public class Game implements IGame {
             }
         }
     }
+
 
     @Override
     public void play() {

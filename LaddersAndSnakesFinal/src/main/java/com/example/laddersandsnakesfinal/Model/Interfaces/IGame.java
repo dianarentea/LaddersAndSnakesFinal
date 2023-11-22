@@ -6,6 +6,7 @@ public interface IGame {
     void joinGame();
 
     void chooseFirstPLayer();
+    void InitializeBoard();
 
     void play();
 
