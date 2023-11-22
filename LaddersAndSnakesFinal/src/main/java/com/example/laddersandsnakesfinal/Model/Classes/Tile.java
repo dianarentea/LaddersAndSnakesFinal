@@ -11,10 +11,8 @@ public class Tile  {
 
     private int tileNumber;
 
-    public void display() {
-        System.out.println("Simple Tile " + tileNumber);
+    public Tile createTile(int tileNumber){
+       return new Tile(tileNumber);
     }
-
-
 
 }

@@ -1,5 +1,6 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
+import com.example.laddersandsnakesfinal.Model.Interfaces.MovementStrategy;
 import lombok.*;
 
 @Data
@@ -7,9 +8,13 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Snake{
+public class Snake implements MovementStrategy {
 
     private Tile startTile;
     private Tile endTile;
 
+    @Override
+    public void move(Tile startTile, Tile endTile){
+    startTile = endTile;
+    }
 }
