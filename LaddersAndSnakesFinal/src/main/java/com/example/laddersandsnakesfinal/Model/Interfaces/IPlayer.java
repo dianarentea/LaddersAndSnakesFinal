@@ -1,6 +1,6 @@
 package com.example.laddersandsnakesfinal.Model.Interfaces;
 
-public interface Player {
+public interface IPlayer {
     int idPLayer = 0;
     String username = "";
     int currentPos = 1;

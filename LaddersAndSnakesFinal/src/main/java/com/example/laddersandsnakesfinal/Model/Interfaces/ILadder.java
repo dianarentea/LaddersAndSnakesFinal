@@ -1,4 +1,4 @@
 package com.example.laddersandsnakesfinal.Model.Interfaces;
 
-public interface Game {
+public interface ILadder {
 }

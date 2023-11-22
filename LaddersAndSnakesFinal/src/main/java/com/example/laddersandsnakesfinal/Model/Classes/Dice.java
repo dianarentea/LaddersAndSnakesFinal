@@ -1,5 +1,6 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
+import com.example.laddersandsnakesfinal.Model.Interfaces.IDice;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dice implements com.example.laddersandsnakesfinal.Model.Interfaces.Dice {
+public class Dice implements IDice {
 
     private boolean showDice;
     private int currentDiceNumber;

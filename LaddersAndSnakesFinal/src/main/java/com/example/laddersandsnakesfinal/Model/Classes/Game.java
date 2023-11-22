@@ -1,9 +1,61 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
-public class Game {
+import com.example.laddersandsnakesfinal.Model.Interfaces.IGame;
+
+import java.util.Scanner;
+
+public class Game implements IGame {
     Dice dice=new Dice();
 
+    private int numberOfPlayers;
+
+
+    @Override
+    public void joinGame()
+    {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the number of players");
+
+        int numberOfPlayers = sc.nextInt();
+        Player[] players = new Player[numberOfPlayers];
+
+
+        //se seteaza numele jucatorilor
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            int index=i+1;
+            System.out.println("Enter the name of player " + index);
+            String username = sc.next();
+            players[i] = new Player(index,username,1,false,false);
+        }
+
+    }
+
+    @Override
+    public void chooseFirstPLayer()
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Choose the first player");
+        int firstPlayer = sc.nextInt();
+        Player[] players = new Player[numberOfPlayers];
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            if(i+1==firstPlayer)
+            {
+                players[i].setTurn(true);
+            }
+            else
+            {
+                players[i].setTurn(false);
+            }
+        }
+    }
+
+    @Override
     public void play() {
+        joinGame();
+        chooseFirstPLayer();
         for (int i = 0; i < 10; i++) {
             int diceValue = dice.rollDice();
             if (dice.isShowDice()) {
