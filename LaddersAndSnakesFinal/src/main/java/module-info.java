@@ -11,6 +11,7 @@ module com.example.laddersandsnakesfinal {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires lombok;
 
     opens com.example.laddersandsnakesfinal to javafx.fxml;
     exports com.example.laddersandsnakesfinal;
