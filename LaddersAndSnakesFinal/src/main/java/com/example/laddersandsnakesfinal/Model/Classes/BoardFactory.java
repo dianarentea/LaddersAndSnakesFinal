@@ -10,18 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public abstract class BoardFactory  {
 
-
-    public abstract ITile createTile();
-
-    public abstract ISnake createSnake();
-
-    public abstract ILadder createLadder();
-
     public abstract void initializeSnakes(ISnake[] snakes, int... positions);
 
     public abstract void initializeLadders(ILadder[] ladders, int... positions);
 
     public abstract ITile createTile(int number);
-
 
 }

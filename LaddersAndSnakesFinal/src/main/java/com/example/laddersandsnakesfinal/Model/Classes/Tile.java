@@ -20,6 +20,10 @@ public class Tile implements ITile {
     public int getTileNumber() {
         return tileNumber;
     }
+    @Override
+    public void setTileNumber(int number) {
+        this.tileNumber = number;
+    }
 
     @Override
     public ITile createTile(int number) {

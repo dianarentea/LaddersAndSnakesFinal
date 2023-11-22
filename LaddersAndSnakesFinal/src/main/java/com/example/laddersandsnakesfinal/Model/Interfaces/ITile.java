@@ -6,4 +6,6 @@ public interface ITile {
    ITile createTile(int number);
 
    int getTileNumber();
+
+   void setTileNumber(int number);
 }

@@ -23,6 +23,14 @@ public class Ladder implements ILadder {
         this.endTile = tile;
     }
     @Override
+    public int getStartTile() {
+        return startTile.getTileNumber();
+    }
+    @Override
+    public int getEndTile() {
+        return endTile.getTileNumber();
+    }
+    @Override
     public void display() {
         System.out.println("Ladder");
         startTile.display();
