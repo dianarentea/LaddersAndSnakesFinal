@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Arrays;
+
 
 @Data
 @Getter
@@ -17,6 +19,9 @@ public class Board {
     public static final String RED = "\033[0;31m";
     public static final String GREEN = "\033[0;32m";
 
+    public Tile createTile(int number) {
+        return new Tile(number);
+    }
     public void initializeSnakes( int... positions) {
 
         if (snakes.length * 2 != positions.length) {
@@ -66,7 +71,6 @@ public class Board {
         for(int i=0; i<ladders.length;i++)
             System.out.println(ladders[i].getStartTile().getTileNumber()+" "+ladders[i].getEndTile().getTileNumber());
     }
-
     public void initializeBoard() {
         tiles = new Tile[100];
         for (int i = 0; i < tiles.length; i++) {
@@ -78,7 +82,6 @@ public class Board {
         initializeSnakes( 6, 3, 42, 19, 45, 36, 51, 13, 67, 54, 83, 62, 90, 87, 96, 66);
         initializeLadders( 5, 9, 15, 25, 18, 80, 44, 86, 47, 68, 63, 78, 71, 94, 81, 98);
     }
-
     public void displayBoard() {
         initializeBoard();
         int rows = 10;
@@ -109,8 +112,6 @@ public class Board {
             }
         }
     }
-
-
     private String getTileRepresentation(Tile tile) {
         if (tile.getTileNumber() == 0) {
             return RED + "S " + RESET;
@@ -120,9 +121,51 @@ public class Board {
             return String.valueOf(tile.getTileNumber()) + " ";
         }
     }
+    private String getTileRepresentation(Tile tile, char playerMarker) {
+        if (tile.getTileNumber() == 0) {
+            return RED + "S" + playerMarker + " " + RESET;
+        } else if (tile.getTileNumber() == -1) {
+            return GREEN + "L" + playerMarker + " " + RESET;
+        } else {
+            return playerMarker != ' ' ? playerMarker + " " : String.valueOf(tile.getTileNumber()) + " ";
+        }
+    }
+    public void markCurrentPositions(int playerOnePos, int playerTwoPos) {
+        int rows = 10;
+        int cols = 10;
 
+        for (int row = rows - 1; row >= 0; row--) {
+            for (int col = 0; col < cols; col++) {
+                int index;
+                if (row % 2 == 0) {
+                    index = row * cols + col;
+                } else {
+                    index = row * cols + (cols - 1 - col);
+                }
 
-    public Tile createTile(int number) {
-        return new Tile(number);
+                char playerMarker = getPlayerMarker(playerOnePos, playerTwoPos, index + 1);
+
+                System.out.print("| " + getTileRepresentation(tiles[index], playerMarker) + " ");
+            }
+
+            System.out.println("|");
+
+            if (row > 0) {
+                // Add horizontal line between rows
+                for (int col = 0; col < cols; col++) {
+                    System.out.print(" --- ");
+                }
+                System.out.println();
+            }
+        }
+    }
+    private char getPlayerMarker(int playerOnePos, int playerTwoPos, int tileNumber) {
+        if (playerOnePos == tileNumber) {
+            return 'X';
+        } else if (playerTwoPos == tileNumber) {
+            return 'Y';
+        } else {
+            return ' ';
+        }
     }
 }

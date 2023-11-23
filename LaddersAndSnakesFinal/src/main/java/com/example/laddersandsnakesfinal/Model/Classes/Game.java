@@ -86,7 +86,7 @@ public class Game  {
                     else
                     {
                         players[i].setCurrentPos(newPos);
-                        System.out.println("You are now at position "+players[i].getCurrentPos());
+                        System.out.println(players[i].getUsername()+ " is now at position "+players[i].getCurrentPos());
 
                         if(players[i].getCurrentPos()==100)
                         {
@@ -103,7 +103,7 @@ public class Game  {
                                 {
                                     System.out.println("You stepped on a snake");
                                     players[i].setCurrentPos(board.getSnakes()[j].getEndTile().getTileNumber());
-                                    System.out.println("You are now at position "+players[i].getCurrentPos());
+                                    System.out.println(players[i].getUsername()+ " is now at position "+players[i].getCurrentPos());
                                     break;
                                 }
                             }
@@ -113,12 +113,13 @@ public class Game  {
                                 {
                                     System.out.println("You stepped on a ladder");
                                     players[i].setCurrentPos(board.getLadders()[j].getEndTile().getTileNumber());
-                                    System.out.println("You are now at position "+players[i].getCurrentPos());
+                                    System.out.println(players[i].getUsername()+ " is now at position "+players[i].getCurrentPos());
                                     break;
                                 }
                             }
                         }
                     }
+                    board.markCurrentPositions(players[0].getCurrentPos(), players[1].getCurrentPos());
                     players[i].setTurn(false);
                     if(i+1==numberOfPlayers)
                     {
