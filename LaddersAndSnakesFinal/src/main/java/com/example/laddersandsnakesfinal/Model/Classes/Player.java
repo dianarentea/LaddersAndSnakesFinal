@@ -14,4 +14,7 @@ public class Player {
     private int currentPos;
     private boolean isWinner;
     private boolean isTurn;
+
+
+
 }

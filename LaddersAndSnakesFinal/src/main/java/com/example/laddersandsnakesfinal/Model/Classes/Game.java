@@ -1,13 +1,17 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game  {
-    Dice dice=new Dice();
+    private Dice dice=new Dice();
 
-    Board board=new Board();
+    private Board board=new Board();
+
+    private Player [] players;
 
     private int numberOfPlayers;
+    private boolean isOver=false;
 
 
     public void joinGame()
@@ -16,8 +20,8 @@ public class Game  {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the number of players");
 
-        int numberOfPlayers = sc.nextInt();
-        Player[] players = new Player[numberOfPlayers];
+        numberOfPlayers = sc.nextInt();
+        players = new Player[numberOfPlayers];
 
 
         //se seteaza numele jucatorilor
@@ -30,23 +34,26 @@ public class Game  {
         }
 
     }
-
-    public void chooseFirstPLayer()
+    public void chooseFirstPlayer()
     {
         Scanner sc = new Scanner(System.in);
         System.out.println("Choose the first player");
         int firstPlayer = sc.nextInt();
-        Player[] players = new Player[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++)
         {
             if(i+1==firstPlayer)
             {
                 players[i].setTurn(true);
+                break;
             }
-            else
-            {
-                players[i].setTurn(false);
-            }
+        }
+    }
+
+    public void showPlayers()
+    {
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            System.out.println("Player "+ players[i].getIdPLayer()+" "+players[i].getUsername()+" is at position "+players[i].getCurrentPos());
         }
     }
 
@@ -54,20 +61,75 @@ public class Game  {
     public void play() {
         board.displayBoard();
         joinGame();
-        chooseFirstPLayer();
-        for (int i = 0; i < 10; i++) {
-            int diceValue = dice.rollDice();
-            if (dice.isShowDice()) {
-                System.out.println("Dice value is " + diceValue);
-            } else {
-                System.out.println("Dice value is hidden");
-            }
-
-            try {
+        chooseFirstPlayer();
+        showPlayers();
+        while(isOver == false)
+        {
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                if(players[i].isTurn()==true)
+                {
+                    System.out.println("It's "+players[i].getUsername()+"'s turn");
+                    int diceValue = dice.rollDice();
+                    System.out.println("Dice value is " + diceValue);
+                    try {
                 // Pause execution for 1 second (1000 milliseconds)
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                         }
+                    int newPos=players[i].getCurrentPos()+diceValue;
+                    if(newPos>100)
+                    {
+                        System.out.println("You can't move");
+                    }
+                    else
+                    {
+                        players[i].setCurrentPos(newPos);
+                        System.out.println("You are now at position "+players[i].getCurrentPos());
+
+                        if(players[i].getCurrentPos()==100)
+                        {
+                            System.out.println("You won");
+                            players[i].setWinner(true);
+                            isOver=true;
+                            break;
+                        }
+                        else
+                        {
+                            for (int j = 0; j < board.getSnakes().length; j++)
+                            {
+                                if(players[i].getCurrentPos()==board.getSnakes()[j].getStartTile().getTileNumber())
+                                {
+                                    System.out.println("You stepped on a snake");
+                                    players[i].setCurrentPos(board.getSnakes()[j].getEndTile().getTileNumber());
+                                    System.out.println("You are now at position "+players[i].getCurrentPos());
+                                    break;
+                                }
+                            }
+                            for (int j = 0; j < board.getLadders().length; j++)
+                            {
+                                if(players[i].getCurrentPos()==board.getLadders()[j].getStartTile().getTileNumber())
+                                {
+                                    System.out.println("You stepped on a ladder");
+                                    players[i].setCurrentPos(board.getLadders()[j].getEndTile().getTileNumber());
+                                    System.out.println("You are now at position "+players[i].getCurrentPos());
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    players[i].setTurn(false);
+                    if(i+1==numberOfPlayers)
+                    {
+                        players[0].setTurn(true);
+                    }
+                    else
+                    {
+                        players[i+1].setTurn(true);
+                    }
+                    break;
+                }
             }
         }
     }

@@ -10,10 +10,7 @@ import lombok.*;
 public class Tile  {
 
     private int tileNumber;
-    private int currentTileNumber;
 
-    public Tile(int tileNumber) {
-        this.tileNumber = tileNumber;
-    }
+
 
 }
