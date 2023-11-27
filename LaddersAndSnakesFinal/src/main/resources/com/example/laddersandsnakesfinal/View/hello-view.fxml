@@ -11,7 +11,7 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <GridPane fx:id="gridpane" prefHeight="500.0" prefWidth="500.0" alignment="CENTER"/>
+    <GridPane fx:id="gridpane" prefHeight="550.0" prefWidth="550.0" alignment="CENTER"  style="-fx-background-size: contain;"/>
 
     <Button onAction="#onExitButtonClick" prefHeight="25.0" prefWidth="53.0" text="Exit" textAlignment="CENTER" />
 </VBox>
