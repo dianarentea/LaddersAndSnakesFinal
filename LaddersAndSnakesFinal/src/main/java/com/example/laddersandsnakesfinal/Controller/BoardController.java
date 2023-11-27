@@ -33,6 +33,10 @@ public class BoardController {
                 cell.setMinSize(cellSize, cellSize);
                 cell.setMaxSize(cellSize, cellSize);
                 cell.setStyle("-fx-border-color: black; -fx-padding: 10px;");
+
+                if (row == 0 && col == 0) {
+                    cell.setStyle(cell.getStyle() + "-fx-background-color: red;");
+                }
                 gridpane.add(cell, col, row);
             }
         }
