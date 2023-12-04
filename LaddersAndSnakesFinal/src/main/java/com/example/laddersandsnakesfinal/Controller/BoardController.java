@@ -1,6 +1,9 @@
 package com.example.laddersandsnakesfinal.Controller;
 
+import com.example.laddersandsnakesfinal.Model.Classes.Dice;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -8,6 +11,8 @@ import javafx.scene.image.Image ;
 import javafx.scene.layout.Region;
 
 public class BoardController {
+    private Dice dice=new Dice();
+
     @FXML
     private Label welcomeText;
 
@@ -25,7 +30,7 @@ public class BoardController {
                 "-fx-background-position: center center;");
 
         int numCells = 10;
-        double cellSize = 50.0;
+
 
         for (int row = numCells - 1; row >= 0; row--) {
             for (int col = 0; col < numCells; col++) {
@@ -35,10 +40,7 @@ public class BoardController {
                 } else {
                     index = 101- (row * numCells + (numCells - 1 - col) + 1);
                 }
-                Region cell = new Region();
-                cell.setMinSize(cellSize, cellSize);
-                cell.setMaxSize(cellSize, cellSize);
-                cell.setStyle("-fx-border-color: black; -fx-padding: 10px;");
+                IndexedRegion cell = new IndexedRegion(index);
 
                 if (index == 2) {
                     String imageUrl = "/p1.png";
@@ -47,27 +49,45 @@ public class BoardController {
 
                     cell.setStyle(cell.getStyle() + imageStyle);
                 }
-                else if (index == 1) {
-                    String imageUrl = "/p2.png";
-                    String imageStyle = "-fx-background-image: url('" + imageUrl + "'); " +
-                            "-fx-background-size: cover;";
-
-                    cell.setStyle(cell.getStyle() + imageStyle);
-                }
+//                else if (index == 1) {
+//                    String imageUrl = "/p2.png";
+//                    String imageStyle = "-fx-background-image: url('" + imageUrl + "'); " +
+//                            "-fx-background-size: cover;";
+//
+//                    cell.setStyle(cell.getStyle() + imageStyle);
+//                }
 
                 gridpane.add(cell, col, row);
             }
         }
         gridpane.toBack();
     }
-    @FXML
-    public void test()
-    {
 
+     @FXML
+    protected void onExitButtonClick() {
+        System.exit(0);
     }
 
     @FXML
-    protected void onExitButtonClick() {
-        System.exit(0);
+    protected void onRollDiceButtonClick() {
+        int indexToCheck = 6;
+        int diceValue=dice.rollDice();
+        for (Node node : gridpane.getChildren())
+        {
+            if (node instanceof IndexedRegion) {
+                IndexedRegion cell = (IndexedRegion) node;
+
+                if (cell.getIndex() == indexToCheck)
+                {
+                    // Am găsit celula cu indexul dorit
+                    String imageUrl = "/p1.png";
+                    String imageStyle = "-fx-background-image: url('" + imageUrl + "'); " +
+                            "-fx-background-size: cover;";
+
+                    // Setează stilul pentru celula cu indexul 2
+                    cell.setStyle(cell.getStyle() + imageStyle);
+                }
+            }
+        }
     }
 }
