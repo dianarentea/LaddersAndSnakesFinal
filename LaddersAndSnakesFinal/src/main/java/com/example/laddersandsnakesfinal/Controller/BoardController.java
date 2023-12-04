@@ -27,22 +27,45 @@ public class BoardController {
         int numCells = 10;
         double cellSize = 50.0;
 
-        for (int row = 0; row < numCells; row++) {
+        for (int row = numCells - 1; row >= 0; row--) {
             for (int col = 0; col < numCells; col++) {
+                int index;
+                if (row % 2 == 0) {
+                    index = 101 - (row * numCells + col + 1);
+                } else {
+                    index = 101- (row * numCells + (numCells - 1 - col) + 1);
+                }
                 Region cell = new Region();
                 cell.setMinSize(cellSize, cellSize);
                 cell.setMaxSize(cellSize, cellSize);
                 cell.setStyle("-fx-border-color: black; -fx-padding: 10px;");
 
-                if (row == 0 && col == 0) {
-                    cell.setStyle(cell.getStyle() + "-fx-background-color: red;");
+                if (index == 2) {
+                    String imageUrl = "/p1.png";
+                    String imageStyle = "-fx-background-image: url('" + imageUrl + "'); " +
+                            "-fx-background-size: cover;";
+
+                    cell.setStyle(cell.getStyle() + imageStyle);
                 }
+                else if (index == 1) {
+                    String imageUrl = "/p2.png";
+                    String imageStyle = "-fx-background-image: url('" + imageUrl + "'); " +
+                            "-fx-background-size: cover;";
+
+                    cell.setStyle(cell.getStyle() + imageStyle);
+                }
+
                 gridpane.add(cell, col, row);
             }
         }
-
         gridpane.toBack();
     }
+    @FXML
+    public void test()
+    {
+
+    }
+
     @FXML
     protected void onExitButtonClick() {
         System.exit(0);

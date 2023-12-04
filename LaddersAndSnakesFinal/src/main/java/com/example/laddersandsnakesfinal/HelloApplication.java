@@ -1,6 +1,7 @@
 package com.example.laddersandsnakesfinal;
 
 import com.example.laddersandsnakesfinal.Controller.BoardController;
+import com.example.laddersandsnakesfinal.Model.Classes.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
