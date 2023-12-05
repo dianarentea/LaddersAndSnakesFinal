@@ -145,7 +145,7 @@ private Dice dice = new Dice();
         String imageUrl = (currentPlayer == 1) ? "/p1.png" : "/p2.png";
 
         // Obține poziția curentă a jucătorului
-        int currentPosition = playerPositions.getOrDefault(currentPlayer, 1);
+        int currentPosition = playerPositions.getOrDefault(currentPlayer, 0);
 
         // Elimină imaginea jucătorului curent de pe poziția curentă
         removePlayerImage(currentPosition);
