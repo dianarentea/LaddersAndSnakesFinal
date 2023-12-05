@@ -125,14 +125,14 @@ public class Board {
             //initializeSnakes( 6, 3, 42, 19, 45, 36, 51, 13, 67, 54, 83, 62, 90, 87, 96, 66);
             // initializeLadders( 5, 9, 15, 25, 18, 80, 44, 86, 47, 68, 63, 78, 71, 94, 81, 98);
             int[][] laddersPositions = {
-                     {0, 4},{0, 8},
-                     {1, 5},{2, 4},
-                     {1, 2},{7, 0},
-                    {6, 2}, {7, 2},
-                     {4, 3},{8, 5},
-                     {4, 6},{6, 7},
-                    {8, 0}, {9, 2},
-                     {7, 9},{9, 6}
+                     {0, 4}, {0, 8},
+                     {1, 5}, {2, 4},
+                     {1, 2}, {7, 0},
+                     {6, 2}, {7, 2},
+                     {4, 3}, {8, 5},
+                     {4, 6}, {6, 7},
+                     {8, 0}, {9, 2},
+                     {7, 9}, {9, 6}
             };
             initializeLadders(laddersPositions);
             int[][] snakesPositions = {
@@ -146,7 +146,9 @@ public class Board {
                     {8, 6},{ 8, 9}
             };
             initializeSnakes(snakesPositions);
+
         }
+
     }
 
     public void displayBoard() {
