@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/LaddersAndSnakesFinal.iml" filepath="$PROJECT_DIR$/.idea/LaddersAndSnakesFinal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LaddersAndSnakesFinal/LaddersAndSnakesFinal.iml" filepath="$PROJECT_DIR$/LaddersAndSnakesFinal/LaddersAndSnakesFinal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/snakes and ladders.iml" filepath="$PROJECT_DIR$/.idea/snakes and ladders.iml" />
     </modules>
   </component>
 </project>
