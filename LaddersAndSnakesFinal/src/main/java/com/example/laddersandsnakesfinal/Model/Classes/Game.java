@@ -1,5 +1,8 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
+import eu.hansolo.toolbox.tuples.Tuple;
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -56,82 +59,123 @@ public class Game  {
             System.out.println("Player "+ players[i].getIdPLayer()+" "+players[i].getUsername()+" is at position "+players[i].getCurrentPos());
         }
     }
-
-
-    public void play() {
-        board.displayBoard();
-        joinGame();
-        chooseFirstPlayer();
-        showPlayers();
-        while(isOver == false)
-        {
-            for (int i = 0; i < numberOfPlayers; i++)
+    private void handleSnake(int currentPosition, Player player) {
+        for (int j = 0; j < board.getSnakes().length; j++) {
+            if (currentPosition == board.getSnakes()[j].getStartTile().getTileNumber())
             {
-                if(players[i].isTurn()==true)
-                {
-                    System.out.println("It's "+players[i].getUsername()+"'s turn");
-                    int diceValue = dice.rollDice();
-                    System.out.println("Dice value is " + diceValue);
-                    try {
-                // Pause execution for 1 second (1000 milliseconds)
-                Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                         }
-                    int newPos=players[i].getCurrentPos()+diceValue;
-                    if(newPos>100)
-                    {
-                        System.out.println("You can't move");
-                    }
-                    else
-                    {
-                        players[i].setCurrentPos(newPos);
-                        System.out.println(players[i].getUsername()+ " is now at position "+players[i].getCurrentPos());
-
-                        if(players[i].getCurrentPos()==100)
-                        {
-                            System.out.println("You won");
-                            players[i].setWinner(true);
-                            isOver=true;
-                            break;
-                        }
-                        else
-                        {
-                            for (int j = 0; j < board.getSnakes().length; j++)
-                            {
-                                if(players[i].getCurrentPos()==board.getSnakes()[j].getStartTile().getTileNumber())
-                                {
-                                    System.out.println("You stepped on a snake");
-                                    players[i].setCurrentPos(board.getSnakes()[j].getEndTile().getTileNumber());
-                                    System.out.println(players[i].getUsername()+ " is now at position "+players[i].getCurrentPos());
-                                    break;
-                                }
-                            }
-                            for (int j = 0; j < board.getLadders().length; j++)
-                            {
-                                if(players[i].getCurrentPos()==board.getLadders()[j].getStartTile().getTileNumber())
-                                {
-                                    System.out.println("You stepped on a ladder");
-                                    players[i].setCurrentPos(board.getLadders()[j].getEndTile().getTileNumber());
-                                    System.out.println(players[i].getUsername()+ " is now at position "+players[i].getCurrentPos());
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    board.markCurrentPositions(players[0].getCurrentPos(), players[1].getCurrentPos());
-                    players[i].setTurn(false);
-                    if(i+1==numberOfPlayers)
-                    {
-                        players[0].setTurn(true);
-                    }
-                    else
-                    {
-                        players[i+1].setTurn(true);
-                    }
-                    break;
-                }
+                System.out.println("You stepped on a snake");
+                player.setCurrentPos(board.getSnakes()[j].getEndTile().getTileNumber());
+                System.out.println(player.getUsername() + " is now at position " + player.getCurrentPos());
+                break;
             }
         }
     }
+    private int handleSnake(int currentPosition) {
+        int endPosition=0;
+        for (int j = 0; j < board.getSnakes().length; j++) {
+            if (currentPosition == board.getSnakes()[j].getStartTile().getTileNumber())
+            {
+                System.out.println("You stepped on a snake");
+                endPosition= board.getSnakes()[j].getEndTile().getTileNumber();
+                break;
+            }
+        }
+        return endPosition;
+    }
+    private void handleLadder(int currentPosition, Player player) {
+        for (int j = 0; j < board.getLadders().length; j++) {
+            if (currentPosition == board.getLadders()[j].getStartTile().getTileNumber()) {
+                System.out.println("You stepped on a ladder");
+                player.setCurrentPos(board.getLadders()[j].getEndTile().getTileNumber());
+                System.out.println(player.getUsername() + " is now at position " + player.getCurrentPos());
+                break;
+            }
+        }
+    }
+
+    private int handleLadder(int currentPosition) {
+        int endPosition=0;
+        for (int j = 0; j < board.getLadders().length; j++) {
+            if (currentPosition == board.getLadders()[j].getStartTile().getTileNumber()) {
+                System.out.println("You stepped on a ladder");
+                endPosition= board.getLadders()[j].getEndTile().getTileNumber();
+                break;
+            }
+        }
+        return endPosition;
+    }
+
+        public void play() {
+            board.displayBoard();
+            joinGame();
+            chooseFirstPlayer();
+            showPlayers();
+            while(isOver == false)
+            {
+                for (int i = 0; i < numberOfPlayers; i++)
+                {
+                    if(players[i].isTurn()==true)
+                    {
+                        System.out.println("It's "+players[i].getUsername()+"'s turn");
+                        int diceValue = dice.rollDice();
+                        System.out.println("Dice value is " + diceValue);
+                        try {
+                    // Pause execution for 1 second (1000 milliseconds)
+                    Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                             }
+
+                        int newPos=players[i].getCurrentPos()+diceValue;
+
+                        //VERIFIC DACA JUCATORUL A AJUNS LA POZITIA 100
+                        if(newPos>100)
+                        {
+                            System.out.println("You can't move");
+                        }
+
+                        //VERIFIC DACA JUCATORUL A AJUNS LA POZITIA 100
+                        else
+                        {
+                            players[i].setCurrentPos(newPos);
+                            System.out.println(players[i].getUsername()+ " is now at position "+players[i].getCurrentPos());
+
+                            if(players[i].getCurrentPos()==100)
+                            {
+                                System.out.println("You won");
+                                players[i].setWinner(true);
+                                isOver=true;
+                                break;
+                            }
+                            ///////////////////////////////////////////////////
+                            //VERIFIC DACA JUCATORUL A AJUNS LA SARPE SAU SCARA
+                            ///////////////////////////////////////////////////
+                            else
+                            {
+                                handleSnake(players[i].getCurrentPos(), players[i]);
+                                handleLadder(players[i].getCurrentPos(), players[i]);
+                            }
+                        }
+
+                        ////////////////////////////////////////////
+
+                        //STATUSUL JOCULUI
+
+                        ////////////////////////////////////////////
+                        board.markCurrentPositions(players[0].getCurrentPos(), players[1].getCurrentPos());
+
+                        players[i].setTurn(false);
+                        if(i+1==numberOfPlayers)
+                        {
+                            players[0].setTurn(true);
+                        }
+                        else
+                        {
+                            players[i+1].setTurn(true);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
 }
