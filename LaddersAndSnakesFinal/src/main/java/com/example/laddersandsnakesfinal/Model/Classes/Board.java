@@ -72,8 +72,8 @@ public class Board {
             tiles[startTileNumber - 1] = new Tile(-1);
             tiles[endTileNumber - 1] = new Tile(-1);
         }
-        for(int i=0; i<ladders.length;i++)
-            System.out.println(ladders[i].getStartTile().getTileNumber()+" "+ladders[i].getEndTile().getTileNumber());
+//        for(int i=0; i<ladders.length;i++)
+//            System.out.println(ladders[i].getStartTile().getTileNumber()+" "+ladders[i].getEndTile().getTileNumber());
     }
     public void initializeSnakes( int... positions) {
 
@@ -81,7 +81,7 @@ public class Board {
             throw new IllegalArgumentException("Number of positions does not match the number of snakes");
         }
 
-        System.out.println("initializare serpi");
+        //System.out.println("initializare serpi");
 
         int positionIndex = 0;
         int snakeIndex=0;
@@ -122,7 +122,7 @@ public class Board {
 //        }
 //    }
     public void initializeBoard() {
-        System.out.println("abd");
+
         tiles = new Tile[100];
         for (int i = 0; i < tiles.length; i++) {
             tiles[i] = new Tile(i + 1);

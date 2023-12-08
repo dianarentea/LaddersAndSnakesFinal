@@ -73,28 +73,28 @@ public class BoardController {
 //        System.exit(0);
 //    }
 //
-//    @FXML
-//    protected void onRollDiceButtonClick() {
-//        int indexToCheck = 6;
-//        int diceValue=dice.rollDice();
-//        for (Node node : gridpane.getChildren())
-//        {
-//            if (node instanceof IndexedRegion) {
-//                IndexedRegion cell = (IndexedRegion) node;
-//
-//                if (cell.getIndex() == indexToCheck)
-//                {
-//                    // Am găsit celula cu indexul dorit
-//                    String imageUrl = "/p1.png";
-//                    String imageStyle = "-fx-background-image: url('" + imageUrl + "'); " +
-//                            "-fx-background-size: cover;";
-//
-//                    // Setează stilul pentru celula cu indexul 2
-//                    cell.setStyle(cell.getStyle() + imageStyle);
-//                }
-//            }
-//        }
-    //}
+    @FXML
+    protected void testButton() {
+        int indexToCheck = 11;
+        int diceValue=dice.rollDice();
+        for (Node node : gridpane.getChildren())
+        {
+            if (node instanceof IndexedRegion) {
+                IndexedRegion cell = (IndexedRegion) node;
+
+                if (cell.getIndex() == indexToCheck)
+                {
+                    // Am găsit celula cu indexul dorit
+                    String imageUrl = "/p1.png";
+                    String imageStyle = "-fx-background-image: url('" + imageUrl + "'); " +
+                            "-fx-background-size: cover;";
+
+                    // Setează stilul pentru celula cu indexul 2
+                    cell.setStyle(cell.getStyle() + imageStyle);
+                }
+            }
+        }
+    }
     private Board board=new Board();
 
     private Dice dice = new Dice();
@@ -154,13 +154,17 @@ public class BoardController {
         // Obține poziția curentă a jucătorului
         int currentPosition = playerPositions.getOrDefault(currentPlayer, 0);
 
+        System.out.println("Poz curenta: " + currentPosition);
+
         if(game.handleSnake(currentPosition)!=0)
         {
             // Elimină imaginea jucătorului curent de pe poziția curentă
             removePlayerImage(currentPosition);
 
             // Calculează noua poziție
-            int newPosition = currentPosition + game.handleSnake(currentPosition);
+            int newPosition =  game.handleSnake(currentPosition);
+
+            System.out.println("You stepped on a snake, new position is " + newPosition);
 
             // Verifică dacă jucătorul a câștigat
             if (newPosition >= 100) {
@@ -180,8 +184,9 @@ public class BoardController {
             removePlayerImage(currentPosition);
 
             // Calculează noua poziție
-            int newPosition = currentPosition + game.handleLadder(currentPosition);
+            int newPosition = game.handleLadder(currentPosition);
 
+            System.out.println("You stepped on a ladder, new position is " + newPosition);
 
             // Verifică dacă jucătorul a câștigat
             if (newPosition >= 100) {
@@ -264,6 +269,7 @@ public class BoardController {
             if (node instanceof IndexedRegion) {
                 IndexedRegion cell = (IndexedRegion) node;
                 if (cell.getIndex() == position) {
+
                     // A găsit celula curentă
                     cell.setStyle("");
                     break;

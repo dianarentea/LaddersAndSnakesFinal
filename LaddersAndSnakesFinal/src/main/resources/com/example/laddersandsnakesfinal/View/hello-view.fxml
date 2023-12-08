@@ -14,6 +14,7 @@
 
     <GridPane fx:id="gridpane" prefHeight="550.0" prefWidth="550.0" alignment="CENTER"  style="-fx-background-size: contain;"/>
 
-    <Button onAction="#onExitButtonClick" prefHeight="25.0" prefWidth="53.0" text="Exit" textAlignment="CENTER" />
+
+<!--    <Button onAction="#onExitButtonClick" prefHeight="25.0" prefWidth="53.0" text="Exit" textAlignment="CENTER" />-->
     <Button onAction="#onRollDiceButtonClick" prefHeight="25.0" prefWidth="53.0" text="Roll Dice" textAlignment="LEFT" />
 </VBox>

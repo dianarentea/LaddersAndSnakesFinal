@@ -78,6 +78,7 @@ public class Game  {
             if (currentPosition == board.getSnakes()[j].getStartTile().getTileNumber())
             {
                 System.out.println("You stepped on a snake");
+
                 endPosition= board.getSnakes()[j].getEndTile().getTileNumber();
                 break;
             }
@@ -88,7 +89,9 @@ public class Game  {
         for (int j = 0; j < board.getLadders().length; j++) {
             if (currentPosition == board.getLadders()[j].getStartTile().getTileNumber()) {
                 System.out.println("You stepped on a ladder");
+
                 player.setCurrentPos(board.getLadders()[j].getEndTile().getTileNumber());
+
                 System.out.println(player.getUsername() + " is now at position " + player.getCurrentPos());
                 break;
             }
@@ -101,6 +104,7 @@ public class Game  {
         int endPosition=0;
         for (int j = 0; j < board.getLadders().length; j++) {
             if (currentPosition == board.getLadders()[j].getStartTile().getTileNumber()) {
+
                 System.out.println("You stepped on a ladder");
                 endPosition= board.getLadders()[j].getEndTile().getTileNumber();
                 break;
