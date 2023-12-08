@@ -71,7 +71,9 @@ public class Game  {
         }
     }
     public int handleSnake(int currentPosition) {
+        board.initializeBoard();
         int endPosition=0;
+
         for (int j = 0; j < board.getSnakes().length; j++) {
             if (currentPosition == board.getSnakes()[j].getStartTile().getTileNumber())
             {
@@ -94,6 +96,8 @@ public class Game  {
     }
 
     public int handleLadder(int currentPosition) {
+        board.initializeBoard();
+
         int endPosition=0;
         for (int j = 0; j < board.getLadders().length; j++) {
             if (currentPosition == board.getLadders()[j].getStartTile().getTileNumber()) {

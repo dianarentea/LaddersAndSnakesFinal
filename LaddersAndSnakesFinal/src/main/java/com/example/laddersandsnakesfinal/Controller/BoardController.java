@@ -153,6 +153,7 @@ public class BoardController {
 
         // Obține poziția curentă a jucătorului
         int currentPosition = playerPositions.getOrDefault(currentPlayer, 0);
+
         if(game.handleSnake(currentPosition)!=0)
         {
             // Elimină imaginea jucătorului curent de pe poziția curentă
@@ -216,6 +217,47 @@ public class BoardController {
         // Schimbă jucătorul curent
         currentPlayer = (currentPlayer == 1) ? 2 : 1;
     }
+//    @FXML
+//    protected void onRollDiceButtonClick() {
+//        int diceValue = dice.rollDice();
+//        int steps = diceValue;
+//
+//        // Alege jucătorul curent
+//        String imageUrl = (currentPlayer == 1) ? "/p1.png" : "/p2.png";
+//
+//        // Obține poziția curentă a jucătorului
+//        int currentPosition = playerPositions.getOrDefault(currentPlayer, 0);
+//
+//        // Calculează noua poziție
+//        int newPosition;
+//
+//        if (game.handleSnake(currentPosition) != 0) {
+//            newPosition = currentPosition + game.handleSnake(currentPosition);
+//        } else if (game.handleLadder(currentPosition) != 0) {
+//            newPosition = currentPosition + game.handleLadder(currentPosition);
+//        } else {
+//            newPosition = currentPosition + steps;
+//        }
+//
+//        // Elimină imaginea jucătorului curent de pe poziția curentă
+//        removePlayerImage(currentPosition);
+//
+//        // Verifică dacă jucătorul a câștigat
+//        if (newPosition >= 100) {
+//            welcomeText.setText("Player " + currentPlayer + " has won!");
+//            return;
+//        }
+//
+//        // Actualizează evidența poziției jucătorului curent
+//        playerPositions.put(currentPlayer, newPosition);
+//
+//        // Actualizează poziția jucătorului curent
+//        updatePlayerPosition(currentPlayer, newPosition, imageUrl);
+//
+//        // Schimbă jucătorul curent
+//        currentPlayer = (currentPlayer == 1) ? 2 : 1;
+//    }
+
 
     private void removePlayerImage(int position) {
         for (Node node : gridpane.getChildren()) {
