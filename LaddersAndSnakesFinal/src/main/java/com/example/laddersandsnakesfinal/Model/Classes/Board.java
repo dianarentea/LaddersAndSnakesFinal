@@ -81,6 +81,8 @@ public class Board {
             throw new IllegalArgumentException("Number of positions does not match the number of snakes");
         }
 
+        System.out.println("initializare serpi");
+
         int positionIndex = 0;
         int snakeIndex=0;
         for (Snake snake : snakes) {
@@ -120,6 +122,7 @@ public class Board {
 //        }
 //    }
     public void initializeBoard() {
+        System.out.println("abd");
         tiles = new Tile[100];
         for (int i = 0; i < tiles.length; i++) {
             tiles[i] = new Tile(i + 1);
