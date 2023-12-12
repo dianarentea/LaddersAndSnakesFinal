@@ -8,10 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ladder{
-
     private Tile startTile;
     private Tile endTile;
-
-    private Ladder[] ladders;
-
 }

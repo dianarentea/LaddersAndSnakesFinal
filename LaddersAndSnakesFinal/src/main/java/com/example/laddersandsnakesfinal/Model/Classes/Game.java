@@ -8,24 +8,17 @@ import java.util.Scanner;
 
 public class Game  {
     private Dice dice=new Dice();
-
     private Board board=new Board();
-
     private Player [] players;
-
     private int numberOfPlayers;
     private boolean isOver=false;
 
-
-    public void joinGame()
-    {
-
+    public void joinGame() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the number of players");
 
         numberOfPlayers = sc.nextInt();
         players = new Player[numberOfPlayers];
-
 
         //se seteaza numele jucatorilor
         for (int i = 0; i < numberOfPlayers; i++)
@@ -35,10 +28,8 @@ public class Game  {
             String username = sc.next();
             players[i] = new Player(index,username,1,false,false);
         }
-
     }
-    public void chooseFirstPlayer()
-    {
+    public void chooseFirstPlayer() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Choose the first player");
         int firstPlayer = sc.nextInt();
@@ -51,14 +42,14 @@ public class Game  {
             }
         }
     }
-
-    public void showPlayers()
-    {
+    public void showPlayers() {
         for (int i = 0; i < numberOfPlayers; i++)
         {
             System.out.println("Player "+ players[i].getIdPLayer()+" "+players[i].getUsername()+" is at position "+players[i].getCurrentPos());
         }
     }
+
+    //logica pentru a verifica in consola
     private void handleSnake(int currentPosition, Player player) {
         for (int j = 0; j < board.getSnakes().length; j++) {
             if (currentPosition == board.getSnakes()[j].getStartTile().getTileNumber())
@@ -69,21 +60,6 @@ public class Game  {
                 break;
             }
         }
-    }
-    public int handleSnake(int currentPosition) {
-        board.initializeBoard();
-        int endPosition=0;
-
-        for (int j = 0; j < board.getSnakes().length; j++) {
-            if (currentPosition == board.getSnakes()[j].getStartTile().getTileNumber())
-            {
-                System.out.println("You stepped on a snake");
-
-                endPosition= board.getSnakes()[j].getEndTile().getTileNumber();
-                break;
-            }
-        }
-        return endPosition;
     }
     private void handleLadder(int currentPosition, Player player) {
         for (int j = 0; j < board.getLadders().length; j++) {
@@ -98,26 +74,11 @@ public class Game  {
         }
     }
 
-    public int handleLadder(int currentPosition) {
-        board.initializeBoard();
-
-        int endPosition=0;
-        for (int j = 0; j < board.getLadders().length; j++) {
-            if (currentPosition == board.getLadders()[j].getStartTile().getTileNumber()) {
-
-                System.out.println("You stepped on a ladder");
-                endPosition= board.getLadders()[j].getEndTile().getTileNumber();
-                break;
-            }
-        }
-        return endPosition;
-    }
-
-        public void play() {
-            board.displayBoard();
-            joinGame();
-            chooseFirstPlayer();
-            showPlayers();
+    public void play() {
+        board.displayBoard();
+        joinGame();
+        chooseFirstPlayer();
+        showPlayers();
             while(isOver == false)
             {
                 for (int i = 0; i < numberOfPlayers; i++)
