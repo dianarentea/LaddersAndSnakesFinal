@@ -12,6 +12,8 @@
     </padding>
     <Label fx:id="wintext" text="Welcome" />
 
+    <Label fx:id="diceText" text="" />
+
     <GridPane fx:id="gridpane" prefHeight="550.0" prefWidth="550.0" alignment="CENTER"  style="-fx-background-size: contain;"/>
 
     <Button onAction="#onRollDiceButtonClick" prefHeight="25.0" prefWidth="53.0" text="Roll Dice" textAlignment="LEFT" />

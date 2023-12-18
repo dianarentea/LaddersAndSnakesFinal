@@ -2,11 +2,14 @@ package com.example.laddersandsnakesfinal.Controller;
 
 import com.example.laddersandsnakesfinal.Model.Classes.Board;
 import com.example.laddersandsnakesfinal.Model.Classes.Dice;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image ;
+import javafx.util.Duration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +22,9 @@ public class BoardController {
 
     @FXML
     private Label wintext;
+
+    @FXML
+    private Label diceText;
 
     @FXML
     private GridPane gridpane = new GridPane();
@@ -65,72 +71,113 @@ public class BoardController {
 
         System.out.println("Poz curenta: " + currentPosition);
 
-        if(board.handleSnakeMove(currentPosition)!=0)
-        {
-            // Elimină imaginea jucătorului curent de pe poziția curentă
-            removePlayerImage(currentPosition);
+        System.out.println("Dice value: " + diceValue);
 
-            // Calculează noua poziție
-            int newPosition =  board.handleSnakeMove(currentPosition);
+        int newPosition = currentPosition + steps;
 
-            System.out.println("You stepped on a snake, new position is " + newPosition);
+        System.out.println("Poz noua: " + newPosition);
 
-            // Verifică dacă jucătorul a câștigat
+        removePlayerImage(currentPosition);
+
+        if (board.handleSnakeMove(newPosition) != 0) {
+            int newPositionSnake = board.handleSnakeMove(newPosition);
+            System.out.println("You stepped on a snake, new position is " + newPositionSnake);
+
+            Timeline timeline1 = new Timeline(
+                    new KeyFrame(Duration.millis(1000), event -> {
+                        // Afișează valoarea zarului
+                        diceText.setText("Dice value: " + diceValue);
+                    }),
+                    new KeyFrame(Duration.millis(1000), event -> {
+                        // Actualizează poziția jucătorului și schimbă jucătorul curent
+                        updatePlayerPosition(currentPlayer, newPosition, imageUrl);
+                        playerPositions.put(currentPlayer, newPosition);
+                    }),
+                    new KeyFrame(Duration.millis(1000), event -> {
+                        removePlayerImage(newPosition);
+
+                    })
+
+            );
+            timeline1.play();
+
+            Timeline timeline2 = new Timeline(
+                    new KeyFrame(Duration.millis(1000), event -> {
+                        // Actualizează poziția jucătorului și schimbă jucătorul curent
+                        updatePlayerPosition(currentPlayer, newPositionSnake, imageUrl);
+                        playerPositions.put(currentPlayer, newPositionSnake);
+
+                        // Schimbă jucătorul curent
+                        currentPlayer = (currentPlayer == 1) ? 2 : 1;
+                    })
+            );
+            timeline2.play();
+
+        } else if (board.handleLadderMove(newPosition) != 0) {
+            int newPositionLadder = board.handleLadderMove(newPosition);
+            System.out.println("You stepped on a ladder, new position is " + newPositionLadder);
+
+            Timeline timeline1 = new Timeline(
+                    new KeyFrame(Duration.millis(1000), event -> {
+                        // Afișează valoarea zarului
+                        diceText.setText("Dice value: " + diceValue);
+                    }),
+                    new KeyFrame(Duration.millis(1000), event -> {
+                        // Actualizează poziția jucătorului și schimbă jucătorul curent
+                        updatePlayerPosition(currentPlayer, newPosition, imageUrl);
+                        playerPositions.put(currentPlayer, newPosition);
+                    }),
+                    new KeyFrame(Duration.millis(1000), event -> {
+                        removePlayerImage(newPosition);
+
+                    })
+
+            );
+            timeline1.play();
+            Timeline timeline2 = new Timeline(
+                    new KeyFrame(Duration.millis(1000), event -> {
+                        // Afișează valoarea zarului
+                        diceText.setText("Dice value: " + diceValue);
+                    }),
+                    new KeyFrame(Duration.millis(1000), event -> {
+                        // Actualizează poziția jucătorului și schimbă jucătorul curent
+                        updatePlayerPosition(currentPlayer, newPositionLadder, imageUrl);
+                        playerPositions.put(currentPlayer, newPositionLadder);
+
+                        // Schimbă jucătorul curent
+                        currentPlayer = (currentPlayer == 1) ? 2 : 1;
+                    })
+            );
+            timeline2.play();
+
+        } else {
+
             if (newPosition >= 100) {
                 wintext.setText("Player " + currentPlayer + " has won!");
                 return;
             }
-            // Actualizează poziția jucătorului curent
-            updatePlayerPosition(currentPlayer, newPosition, imageUrl);
 
-            // Actualizează evidența poziției jucătorului curent
-            playerPositions.put(currentPlayer, newPosition);
+            // Adaugă un delay înainte de a schimba jucătorul
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.millis(1000), event -> {
+                        // Afișează valoarea zarului
+                       diceText.setText("Dice value: " + diceValue);
+                    }),
+                    new KeyFrame(Duration.millis(1000), event -> {
+                        // Actualizează poziția jucătorului și schimbă jucătorul curent
+                        updatePlayerPosition(currentPlayer, newPosition, imageUrl);
+                        playerPositions.put(currentPlayer, newPosition);
 
+
+                        // Schimbă jucătorul curent
+                        currentPlayer = (currentPlayer == 1) ? 2 : 1;
+                    })
+            );
+            timeline.play();
         }
-        else if(board.handleLadderMove(currentPosition)!=0)
-        {
-            // Elimină imaginea jucătorului curent de pe poziția curentă
-            removePlayerImage(currentPosition);
-
-            // Calculează noua poziție
-            int newPosition = board.handleLadderMove(currentPosition);
-
-            System.out.println("You stepped on a ladder, new position is " + newPosition);
-
-            // Verifică dacă jucătorul a câștigat
-            if (newPosition >= 100) {
-                wintext.setText("Player " + currentPlayer + " has won!");
-                return;
-            }
-            // Actualizează poziția jucătorului curent
-            updatePlayerPosition(currentPlayer, newPosition, imageUrl);
-
-            // Actualizează evidența poziției jucătorului curent
-            playerPositions.put(currentPlayer, newPosition);
-        }
-        else {
-
-            // Elimină imaginea jucătorului curent de pe poziția curentă
-            removePlayerImage(currentPosition);
-
-            // Calculează noua poziție
-            int newPosition = currentPosition + steps;
-
-            // Verifică dacă jucătorul a câștigat
-            if (newPosition >= 100) {
-                wintext.setText("Player " + currentPlayer + " has won!");
-                return;
-            }
-
-            // Actualizează poziția jucătorului curent
-            updatePlayerPosition(currentPlayer, newPosition, imageUrl);
-
-            // Actualizează evidența poziției jucătorului curent
-            playerPositions.put(currentPlayer, newPosition);
-        }
-        // Schimbă jucătorul curent
-        currentPlayer = (currentPlayer == 1) ? 2 : 1;
     }
+
+
     private void removePlayerImage(int position) {
         for (Node node : gridpane.getChildren()) {
             if (node instanceof IndexedRegion) {

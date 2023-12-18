@@ -98,6 +98,7 @@ public class Board {
     public void displayBoard() {
 
         initializeBoard();
+
         int rows = 10;
         int cols = 10;
 
