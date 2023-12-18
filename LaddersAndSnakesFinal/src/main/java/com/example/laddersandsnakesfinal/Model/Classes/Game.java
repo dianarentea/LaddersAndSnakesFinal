@@ -1,9 +1,5 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
-import eu.hansolo.toolbox.tuples.Tuple;
-import javafx.util.Pair;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game  {
@@ -50,29 +46,7 @@ public class Game  {
     }
 
     //logica pentru a verifica in consola
-    private void handleSnake(int currentPosition, Player player) {
-        for (int j = 0; j < board.getSnakes().length; j++) {
-            if (currentPosition == board.getSnakes()[j].getStartTile().getTileNumber())
-            {
-                System.out.println("You stepped on a snake");
-                player.setCurrentPos(board.getSnakes()[j].getEndTile().getTileNumber());
-                System.out.println(player.getUsername() + " is now at position " + player.getCurrentPos());
-                break;
-            }
-        }
-    }
-    private void handleLadder(int currentPosition, Player player) {
-        for (int j = 0; j < board.getLadders().length; j++) {
-            if (currentPosition == board.getLadders()[j].getStartTile().getTileNumber()) {
-                System.out.println("You stepped on a ladder");
 
-                player.setCurrentPos(board.getLadders()[j].getEndTile().getTileNumber());
-
-                System.out.println(player.getUsername() + " is now at position " + player.getCurrentPos());
-                break;
-            }
-        }
-    }
 
     public void play() {
         board.displayBoard();
@@ -121,8 +95,8 @@ public class Game  {
                             ///////////////////////////////////////////////////
                             else
                             {
-                                handleSnake(players[i].getCurrentPos(), players[i]);
-                                handleLadder(players[i].getCurrentPos(), players[i]);
+                                board.handleSnake(players[i].getCurrentPos(), players[i]);
+                                board.handleLadder(players[i].getCurrentPos(), players[i]);
                             }
                         }
 

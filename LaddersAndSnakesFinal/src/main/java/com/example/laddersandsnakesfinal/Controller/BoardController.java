@@ -2,15 +2,11 @@ package com.example.laddersandsnakesfinal.Controller;
 
 import com.example.laddersandsnakesfinal.Model.Classes.Board;
 import com.example.laddersandsnakesfinal.Model.Classes.Dice;
-import com.example.laddersandsnakesfinal.Model.Classes.Game;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image ;
-import javafx.scene.layout.Region;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,13 +65,13 @@ public class BoardController {
 
         System.out.println("Poz curenta: " + currentPosition);
 
-        if(board.handleSnake(currentPosition)!=0)
+        if(board.handleSnakeMove(currentPosition)!=0)
         {
             // Elimină imaginea jucătorului curent de pe poziția curentă
             removePlayerImage(currentPosition);
 
             // Calculează noua poziție
-            int newPosition =  board.handleSnake(currentPosition);
+            int newPosition =  board.handleSnakeMove(currentPosition);
 
             System.out.println("You stepped on a snake, new position is " + newPosition);
 
@@ -91,13 +87,13 @@ public class BoardController {
             playerPositions.put(currentPlayer, newPosition);
 
         }
-        else if(board.handleLadder(currentPosition)!=0)
+        else if(board.handleLadderMove(currentPosition)!=0)
         {
             // Elimină imaginea jucătorului curent de pe poziția curentă
             removePlayerImage(currentPosition);
 
             // Calculează noua poziție
-            int newPosition = board.handleLadder(currentPosition);
+            int newPosition = board.handleLadderMove(currentPosition);
 
             System.out.println("You stepped on a ladder, new position is " + newPosition);
 

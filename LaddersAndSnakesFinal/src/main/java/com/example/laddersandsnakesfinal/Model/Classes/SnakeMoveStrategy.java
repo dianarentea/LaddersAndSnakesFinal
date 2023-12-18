@@ -5,20 +5,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SnakeMoveStrategy implements IMoveStrategy {
 
-    private Snake snake;
-    private Snake[] snakes = new Snake[8];
+    private List<Integer> snakesPos;
     @Override
-    public int handleMove(int currentPosition) {
-        if (currentPosition == snake.getStartTile().getTileNumber()) {
-            System.out.println("You stepped on a ladder");
-            return snake.getEndTile().getTileNumber();
+    public int handleMove(int currentPosition)
+    {
+        for(int i=0;i<snakesPos.size();i+=2) {
+            if (currentPosition == snakesPos.get(i)) {
+                System.out.println("You stepped on a snake");
+                return snakesPos.get(i + 1);
+            }
         }
-        return currentPosition;
+            return 0;
     }
 
 }

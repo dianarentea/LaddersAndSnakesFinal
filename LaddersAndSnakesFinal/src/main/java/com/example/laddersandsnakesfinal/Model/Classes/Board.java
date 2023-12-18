@@ -1,10 +1,11 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
+import com.example.laddersandsnakesfinal.Model.Interfaces.IMoveStrategy;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Arrays;
+import java.util.List;
 
 
 @Data
@@ -21,6 +22,12 @@ public class Board {
     private static final String RESET = "\033[0m";
     private static final String RED = "\033[0;31m";
     private static final String GREEN = "\033[0;32m";
+
+    List<Integer> snakePositions =List.of(6, 3, 42, 19, 45, 36, 51, 13, 67, 54, 83, 62, 90, 87, 96, 66);
+    IMoveStrategy snakeMoveStrategy = new SnakeMoveStrategy(snakePositions);
+
+    List<Integer> ladderPositions =List.of(5, 9, 15, 25, 18, 80, 44, 86, 47, 68, 63, 78, 71, 94, 81, 98);
+    IMoveStrategy ladderMoveStrategy = new LadderMoveStrategy(ladderPositions);
     private void initializeLadders(int... positions) {
 
         if (ladders.length * 2 != positions.length) {
@@ -80,8 +87,17 @@ public class Board {
         initializeSnakes(6, 3, 42, 19, 45, 36, 51, 13, 67, 54, 83, 62, 90, 87, 96, 66);
         initializeLadders(5, 9, 15, 25, 18, 80, 44, 86, 47, 68, 63, 78, 71, 94, 81, 98);
     }
-    public int handleSnake(int currentPosition) {
-        //board.initializeBoard();
+
+  public int handleSnakeMove(int currentPosition) {
+        return snakeMoveStrategy.handleMove(currentPosition);
+    }
+
+    public int handleLadderMove(int currentPosition) {
+        return ladderMoveStrategy.handleMove(currentPosition);
+    }
+
+    ////////////////////////methods for UI////////////////////////////
+    public int getEndPositionSnake(int currentPosition) {
         int endPosition=0;
 
         for (int j = 0; j < getSnakes().length; j++) {
@@ -95,19 +111,42 @@ public class Board {
         }
         return endPosition;
     }
-    public int handleLadder(int currentPosition) {
-       // board.initializeBoard();
-
+    public int getEndPositionLadder(int currentPosition) {
         int endPosition=0;
         for (int j = 0; j < getLadders().length; j++) {
             if (currentPosition == getLadders()[j].getStartTile().getTileNumber()) {
-
                 System.out.println("You stepped on a ladder");
                 endPosition= getLadders()[j].getEndTile().getTileNumber();
                 break;
             }
         }
         return endPosition;
+    }
+
+
+    ///////////////////////////////methods for console////////////////////////////
+    public void handleSnake(int currentPosition, Player player) {
+        for (int j = 0; j < getSnakes().length; j++) {
+            if (currentPosition == getSnakes()[j].getStartTile().getTileNumber())
+            {
+                System.out.println("You stepped on a snake");
+                player.setCurrentPos(getSnakes()[j].getEndTile().getTileNumber());
+                System.out.println(player.getUsername() + " is now at position " + player.getCurrentPos());
+                break;
+            }
+        }
+    }
+    public void handleLadder(int currentPosition, Player player) {
+        for (int j = 0; j < getLadders().length; j++) {
+            if (currentPosition == getLadders()[j].getStartTile().getTileNumber()) {
+                System.out.println("You stepped on a ladder");
+
+                player.setCurrentPos(getLadders()[j].getEndTile().getTileNumber());
+
+                System.out.println(player.getUsername() + " is now at position " + player.getCurrentPos());
+                break;
+            }
+        }
     }
 
     //display board in console

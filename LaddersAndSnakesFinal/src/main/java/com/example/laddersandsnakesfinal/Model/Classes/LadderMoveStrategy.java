@@ -5,20 +5,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class LadderMoveStrategy implements IMoveStrategy {
 
-    private Ladder ladder;
-    private Ladder[] ladders = new Ladder[8];
+    private List<Integer> laddersPos;
+
     @Override
     public int handleMove(int currentPosition) {
-        if (currentPosition == ladder.getStartTile().getTileNumber()) {
-            System.out.println("You stepped on a ladder");
-            return ladder.getEndTile().getTileNumber();
+        for(int i=0;i<laddersPos.size();i+=2) {
+            if (currentPosition == laddersPos.get(i)) {
+                System.out.println("You stepped on a ladder");
+                return laddersPos.get(i + 1);
+            }
         }
-        return currentPosition;
+            return 0;
     }
 
 }
