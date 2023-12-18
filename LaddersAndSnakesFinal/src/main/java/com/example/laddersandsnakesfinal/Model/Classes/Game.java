@@ -95,8 +95,10 @@ public class Game  {
                             ///////////////////////////////////////////////////
                             else
                             {
-                                board.handleSnake(players[i].getCurrentPos(), players[i]);
-                                board.handleLadder(players[i].getCurrentPos(), players[i]);
+                                players[i].setCurrentPos((board.handleSnakeMove(players[i].getCurrentPos())));
+                                players[i].setCurrentPos((board.handleLadderMove(players[i].getCurrentPos())));
+//                                board.handleSnake(players[i].getCurrentPos(), players[i]);
+//                                board.handleLadder(players[i].getCurrentPos(), players[i]);
                             }
                         }
 

@@ -87,68 +87,13 @@ public class Board {
         initializeSnakes(6, 3, 42, 19, 45, 36, 51, 13, 67, 54, 83, 62, 90, 87, 96, 66);
         initializeLadders(5, 9, 15, 25, 18, 80, 44, 86, 47, 68, 63, 78, 71, 94, 81, 98);
     }
-
-  public int handleSnakeMove(int currentPosition) {
+    public int handleSnakeMove(int currentPosition) {
         return snakeMoveStrategy.handleMove(currentPosition);
     }
-
     public int handleLadderMove(int currentPosition) {
         return ladderMoveStrategy.handleMove(currentPosition);
     }
-
-    ////////////////////////methods for UI////////////////////////////
-    public int getEndPositionSnake(int currentPosition) {
-        int endPosition=0;
-
-        for (int j = 0; j < getSnakes().length; j++) {
-            if (currentPosition == getSnakes()[j].getStartTile().getTileNumber())
-            {
-                System.out.println("You stepped on a snake");
-
-                endPosition= getSnakes()[j].getEndTile().getTileNumber();
-                break;
-            }
-        }
-        return endPosition;
-    }
-    public int getEndPositionLadder(int currentPosition) {
-        int endPosition=0;
-        for (int j = 0; j < getLadders().length; j++) {
-            if (currentPosition == getLadders()[j].getStartTile().getTileNumber()) {
-                System.out.println("You stepped on a ladder");
-                endPosition= getLadders()[j].getEndTile().getTileNumber();
-                break;
-            }
-        }
-        return endPosition;
-    }
-
-
-    ///////////////////////////////methods for console////////////////////////////
-    public void handleSnake(int currentPosition, Player player) {
-        for (int j = 0; j < getSnakes().length; j++) {
-            if (currentPosition == getSnakes()[j].getStartTile().getTileNumber())
-            {
-                System.out.println("You stepped on a snake");
-                player.setCurrentPos(getSnakes()[j].getEndTile().getTileNumber());
-                System.out.println(player.getUsername() + " is now at position " + player.getCurrentPos());
-                break;
-            }
-        }
-    }
-    public void handleLadder(int currentPosition, Player player) {
-        for (int j = 0; j < getLadders().length; j++) {
-            if (currentPosition == getLadders()[j].getStartTile().getTileNumber()) {
-                System.out.println("You stepped on a ladder");
-
-                player.setCurrentPos(getLadders()[j].getEndTile().getTileNumber());
-
-                System.out.println(player.getUsername() + " is now at position " + player.getCurrentPos());
-                break;
-            }
-        }
-    }
-
+    
     //display board in console
     public void displayBoard() {
 
