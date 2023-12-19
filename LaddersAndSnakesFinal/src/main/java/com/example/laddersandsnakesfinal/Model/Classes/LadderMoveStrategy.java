@@ -18,7 +18,6 @@ public class LadderMoveStrategy implements IMoveStrategy {
     public int handleMove(int currentPosition) {
         for(int i=0;i<laddersPos.size();i+=2) {
             if (currentPosition == laddersPos.get(i)) {
-                System.out.println("You stepped on a ladder");
                 return laddersPos.get(i + 1);
             }
         }

@@ -18,7 +18,6 @@ public class SnakeMoveStrategy implements IMoveStrategy {
     {
         for(int i=0;i<snakesPos.size();i+=2) {
             if (currentPosition == snakesPos.get(i)) {
-                System.out.println("You stepped on a snake");
                 return snakesPos.get(i + 1);
             }
         }

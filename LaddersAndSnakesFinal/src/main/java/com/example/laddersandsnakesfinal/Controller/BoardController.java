@@ -2,6 +2,7 @@ package com.example.laddersandsnakesfinal.Controller;
 
 import com.example.laddersandsnakesfinal.Model.Classes.Board;
 import com.example.laddersandsnakesfinal.Model.Classes.Dice;
+import com.example.laddersandsnakesfinal.Model.Classes.Game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -15,8 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardController {
-    private Board board=new Board();
-    private Dice dice = new Dice();
+    private Game game = Game.getInstance();
     private int currentPlayer = 1;
     private Map<Integer, Integer> playerPositions = new HashMap<>();
 
@@ -32,7 +32,7 @@ public class BoardController {
     @FXML
     public void initialize() {
 
-        board.initializeBoard();
+        game.initializeGame();
         // Set the background image
         Image backgroundImage = new Image(getClass().getResource("/l2.jpg").toExternalForm());
 
@@ -60,29 +60,17 @@ public class BoardController {
     }
     @FXML
     protected void onRollDiceButtonClick() {
-        int diceValue = dice.rollDice();
-        int steps = diceValue;
+        int diceValue = game.rollDice();
 
-        // Alege jucătorul curent
         String imageUrl = (currentPlayer == 1) ? "/p1.png" : "/p2.png";
-
-        // Obține poziția curentă a jucătorului
         int currentPosition = playerPositions.getOrDefault(currentPlayer, 0);
 
-        System.out.println("Poz curenta: " + currentPosition);
-
-        System.out.println("Dice value: " + diceValue);
-
-        int newPosition = currentPosition + steps;
-
-        System.out.println("Poz noua: " + newPosition);
-
+        int newPosition = game.handlePlayerMove(currentPosition, diceValue);
         removePlayerImage(currentPosition);
 
-        if (board.handleSnakeMove(newPosition) != 0) {
-            int newPositionSnake = board.handleSnakeMove(newPosition);
-            System.out.println("You stepped on a snake, new position is " + newPositionSnake);
+        int newPositionSnakeOrLadder = game.handlePlayerMoveSnakeAndLadder(currentPosition, diceValue);
 
+        if (newPositionSnakeOrLadder != 0) {
             Timeline timeline1 = new Timeline(
                     new KeyFrame(Duration.millis(1000), event -> {
                         // Afișează valoarea zarului
@@ -104,55 +92,17 @@ public class BoardController {
             Timeline timeline2 = new Timeline(
                     new KeyFrame(Duration.millis(1000), event -> {
                         // Actualizează poziția jucătorului și schimbă jucătorul curent
-                        updatePlayerPosition(currentPlayer, newPositionSnake, imageUrl);
-                        playerPositions.put(currentPlayer, newPositionSnake);
+                        updatePlayerPosition(currentPlayer, newPositionSnakeOrLadder, imageUrl);
+                        playerPositions.put(currentPlayer, newPositionSnakeOrLadder);
 
                         // Schimbă jucătorul curent
                         currentPlayer = (currentPlayer == 1) ? 2 : 1;
                     })
             );
             timeline2.play();
-
-        } else if (board.handleLadderMove(newPosition) != 0) {
-            int newPositionLadder = board.handleLadderMove(newPosition);
-            System.out.println("You stepped on a ladder, new position is " + newPositionLadder);
-
-            Timeline timeline1 = new Timeline(
-                    new KeyFrame(Duration.millis(1000), event -> {
-                        // Afișează valoarea zarului
-                        diceText.setText("Dice value: " + diceValue);
-                    }),
-                    new KeyFrame(Duration.millis(1000), event -> {
-                        // Actualizează poziția jucătorului și schimbă jucătorul curent
-                        updatePlayerPosition(currentPlayer, newPosition, imageUrl);
-                        playerPositions.put(currentPlayer, newPosition);
-                    }),
-                    new KeyFrame(Duration.millis(1000), event -> {
-                        removePlayerImage(newPosition);
-
-                    })
-
-            );
-            timeline1.play();
-            Timeline timeline2 = new Timeline(
-                    new KeyFrame(Duration.millis(1000), event -> {
-                        // Afișează valoarea zarului
-                        diceText.setText("Dice value: " + diceValue);
-                    }),
-                    new KeyFrame(Duration.millis(1000), event -> {
-                        // Actualizează poziția jucătorului și schimbă jucătorul curent
-                        updatePlayerPosition(currentPlayer, newPositionLadder, imageUrl);
-                        playerPositions.put(currentPlayer, newPositionLadder);
-
-                        // Schimbă jucătorul curent
-                        currentPlayer = (currentPlayer == 1) ? 2 : 1;
-                    })
-            );
-            timeline2.play();
-
-        } else {
-
-            if (newPosition >= 100) {
+        }
+         else {
+            if (game.hasPlayerWon(newPosition) == 1) {
                 wintext.setText("Player " + currentPlayer + " has won!");
                 return;
             }
@@ -176,7 +126,6 @@ public class BoardController {
             timeline.play();
         }
     }
-
 
     private void removePlayerImage(int position) {
         for (Node node : gridpane.getChildren()) {
