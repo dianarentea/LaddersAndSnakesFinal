@@ -1,7 +1,6 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
 import lombok.*;
-
 @Data
 @Getter
 @Setter

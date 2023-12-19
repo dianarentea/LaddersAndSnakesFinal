@@ -4,6 +4,7 @@ public class Game {
     private static Game instance;  // Instanta Singleton
     private Dice dice = new Dice();
     private Board board = new Board();
+    private PlayerEnum currentPlayer = PlayerEnum.PLAYER1;
     private Game() {
     }
 
@@ -55,4 +56,12 @@ public class Game {
         return 0;
     }
 
+    public PlayerEnum getCurrentPlayer() {
+        System.out.println("Current player is " + currentPlayer.getName());
+        return currentPlayer;
+    }
+
+    public void switchPlayer() {
+        currentPlayer = (currentPlayer == PlayerEnum.PLAYER1) ? PlayerEnum.PLAYER2 : PlayerEnum.PLAYER1;
+    }
 }

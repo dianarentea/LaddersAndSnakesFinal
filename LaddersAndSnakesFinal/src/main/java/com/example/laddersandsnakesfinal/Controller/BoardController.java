@@ -3,7 +3,9 @@ package com.example.laddersandsnakesfinal.Controller;
 import com.example.laddersandsnakesfinal.Model.Classes.Board;
 import com.example.laddersandsnakesfinal.Model.Classes.Dice;
 import com.example.laddersandsnakesfinal.Model.Classes.Game;
+import com.example.laddersandsnakesfinal.Model.Classes.PlayerEnum;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -17,18 +19,12 @@ import java.util.Map;
 
 public class BoardController {
     private Game game = Game.getInstance();
-    private int currentPlayer = 1;
-    private Map<Integer, Integer> playerPositions = new HashMap<>();
-
     @FXML
     private Label wintext;
-
     @FXML
     private Label diceText;
-
     @FXML
     private GridPane gridpane = new GridPane();
-
     @FXML
     public void initialize() {
 
@@ -62,69 +58,52 @@ public class BoardController {
     protected void onRollDiceButtonClick() {
         int diceValue = game.rollDice();
 
-        String imageUrl = (currentPlayer == 1) ? "/p1.png" : "/p2.png";
-        int currentPosition = playerPositions.getOrDefault(currentPlayer, 0);
+        PlayerEnum currentPlayer = game.getCurrentPlayer();
+        int currentPosition = currentPlayer.getPosition();
 
         int newPosition = game.handlePlayerMove(currentPosition, diceValue);
         removePlayerImage(currentPosition);
 
         int newPositionSnakeOrLadder = game.handlePlayerMoveSnakeAndLadder(currentPosition, diceValue);
+        diceText.setText("Dice value: " + diceValue);
+
 
         if (newPositionSnakeOrLadder != 0) {
             Timeline timeline1 = new Timeline(
                     new KeyFrame(Duration.millis(1000), event -> {
-                        // Afișează valoarea zarului
-                        diceText.setText("Dice value: " + diceValue);
+                        updatePlayerPosition(currentPlayer, newPosition);
                     }),
                     new KeyFrame(Duration.millis(1000), event -> {
-                        // Actualizează poziția jucătorului și schimbă jucătorul curent
-                        updatePlayerPosition(currentPlayer, newPosition, imageUrl);
-                        playerPositions.put(currentPlayer, newPosition);
+                        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                        pause.setOnFinished(pauseEvent -> {
+                            updatePlayerPosition(currentPlayer, newPositionSnakeOrLadder);
+                            game.switchPlayer();
+                        });
+                        pause.play();
                     }),
                     new KeyFrame(Duration.millis(1000), event -> {
                         removePlayerImage(newPosition);
-
                     })
-
             );
             timeline1.play();
-
-            Timeline timeline2 = new Timeline(
-                    new KeyFrame(Duration.millis(1000), event -> {
-                        // Actualizează poziția jucătorului și schimbă jucătorul curent
-                        updatePlayerPosition(currentPlayer, newPositionSnakeOrLadder, imageUrl);
-                        playerPositions.put(currentPlayer, newPositionSnakeOrLadder);
-
-                        // Schimbă jucătorul curent
-                        currentPlayer = (currentPlayer == 1) ? 2 : 1;
-                    })
-            );
-            timeline2.play();
         }
+
          else {
-            if (game.hasPlayerWon(newPosition) == 1) {
-                wintext.setText("Player " + currentPlayer + " has won!");
+            if (game.hasPlayerWon(newPosition) == 1)
+            {
+                wintext.setText("Player " + currentPlayer.getName() + " has won!");
                 return;
             }
-
-            // Adaugă un delay înainte de a schimba jucătorul
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.millis(1000), event -> {
-                        // Afișează valoarea zarului
-                       diceText.setText("Dice value: " + diceValue);
-                    }),
-                    new KeyFrame(Duration.millis(1000), event -> {
-                        // Actualizează poziția jucătorului și schimbă jucătorul curent
-                        updatePlayerPosition(currentPlayer, newPosition, imageUrl);
-                        playerPositions.put(currentPlayer, newPosition);
-
-
-                        // Schimbă jucătorul curent
-                        currentPlayer = (currentPlayer == 1) ? 2 : 1;
+                        updatePlayerPosition(currentPlayer, newPosition);
+                        game.switchPlayer();
                     })
             );
             timeline.play();
         }
+
+        wintext.setText(currentPlayer.getName() + " has moved!");
     }
 
     private void removePlayerImage(int position) {
@@ -132,25 +111,21 @@ public class BoardController {
             if (node instanceof IndexedRegion) {
                 IndexedRegion cell = (IndexedRegion) node;
                 if (cell.getIndex() == position) {
-
-                    // A găsit celula curentă
                     cell.setStyle("");
                     break;
                 }
             }
         }
     }
-    private void updatePlayerPosition(int player, int position, String imageUrl) {
+    private void updatePlayerPosition(PlayerEnum player, int position) {
         for (Node node : gridpane.getChildren()) {
             if (node instanceof IndexedRegion) {
                 IndexedRegion cell = (IndexedRegion) node;
                 if (cell.getIndex() == position) {
-                    // A găsit noua celulă
-                    String newImageStyle = "-fx-background-image: url('" + imageUrl + "'); " +
+                    String newImageStyle = "-fx-background-image: url('" + player.getImageUrl() + "'); " +
                             "-fx-background-size: cover;";
-
-                    // Setează stilul pentru noua celulă
                     cell.setStyle(newImageStyle);
+                    player.setPosition(position);
                     break;
                 }
             }
