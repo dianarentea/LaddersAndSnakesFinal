@@ -10,6 +10,7 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image ;
 import javafx.util.Duration;
@@ -22,7 +23,7 @@ public class BoardController {
     @FXML
     private Label wintext;
     @FXML
-    private Label diceText;
+    private ImageView diceImageView;
     @FXML
     private GridPane gridpane = new GridPane();
     @FXML
@@ -58,6 +59,8 @@ public class BoardController {
     protected void onRollDiceButtonClick() {
         int diceValue = game.rollDice();
 
+        diceImageView.setImage(new Image(getClass().getResource("/dice/" + diceValue + ".png").toExternalForm()));
+
         PlayerEnum currentPlayer = game.getCurrentPlayer();
         int currentPosition = currentPlayer.getPosition();
 
@@ -65,7 +68,6 @@ public class BoardController {
         removePlayerImage(currentPosition);
 
         int newPositionSnakeOrLadder = game.handlePlayerMoveSnakeAndLadder(currentPosition, diceValue);
-        diceText.setText("Dice value: " + diceValue);
 
 
         if (newPositionSnakeOrLadder != 0) {
