@@ -11,10 +11,14 @@ public class Dice  {
 
     private boolean showDice;
     private int currentDiceNumber;
+    private int fixedValue;
 
     public int rollDice() {
         showDice = true;
         currentDiceNumber = (int) (Math.random() * 6 + 1);
         return currentDiceNumber;
+    }
+    public void setFixedValue(int fixedValue) {
+        this.fixedValue = fixedValue;
     }
 }

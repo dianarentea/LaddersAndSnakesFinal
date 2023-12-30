@@ -21,13 +21,16 @@ public class Game {
 
     public int rollDice() {
         int diceValue = dice.rollDice();
-        System.out.println("Your dice value is " + diceValue);
         return diceValue;
     }
 
     public int handlePlayerMove( int currentPosition, int diceValue) {
+
         int newPosition = currentPosition + diceValue;
-        System.out.println("Your position is " + newPosition);
+        if(newPosition>100)
+        {
+            return currentPosition;
+        }
         return newPosition;
     }
 
@@ -37,13 +40,12 @@ public class Game {
 
         int newPositionSnake = board.handleSnakeMove(newPosition);
         if (newPositionSnake != 0) {
-            System.out.println("You hit a snake! Go back to position " + newPositionSnake);
             return newPositionSnake;
         }
 
         int newPositionLadder = board.handleLadderMove(newPosition);
         if (newPositionLadder != 0) {
-            System.out.println("You hit a ladder! Go to position " + newPositionLadder);
+
             return newPositionLadder;
         }
         return 0;
@@ -57,11 +59,13 @@ public class Game {
     }
 
     public PlayerEnum getCurrentPlayer() {
-        System.out.println("Current player is " + currentPlayer.getName());
         return currentPlayer;
     }
 
     public void switchPlayer() {
         currentPlayer = (currentPlayer == PlayerEnum.PLAYER1) ? PlayerEnum.PLAYER2 : PlayerEnum.PLAYER1;
+    }
+    public void setFixedDiceValue(int fixedValue) {
+        dice.setFixedValue(fixedValue);
     }
 }

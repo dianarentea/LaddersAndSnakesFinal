@@ -36,4 +36,5 @@ class BoardTest {
         // Testează dacă scară nu se mișcă dacă este pe o poziție de scară, dar aceasta este poziția finală a scării
         assertEquals(0, board.handleLadderMove(98));
     }
+    //verific ca se initializeaza serpi si scarile
 }

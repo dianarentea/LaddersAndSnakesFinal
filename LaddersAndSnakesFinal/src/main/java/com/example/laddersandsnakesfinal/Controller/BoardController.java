@@ -14,10 +14,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image ;
 import javafx.util.Duration;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
-
+@Getter
+@Setter
 public class BoardController {
     private Game game = Game.getInstance();
     @FXML
@@ -108,7 +111,7 @@ public class BoardController {
         wintext.setText(currentPlayer.getName() + " has moved!");
     }
 
-    private void removePlayerImage(int position) {
+    void removePlayerImage(int position) {
         for (Node node : gridpane.getChildren()) {
             if (node instanceof IndexedRegion) {
                 IndexedRegion cell = (IndexedRegion) node;
@@ -119,7 +122,7 @@ public class BoardController {
             }
         }
     }
-    private void updatePlayerPosition(PlayerEnum player, int position) {
+    void updatePlayerPosition(PlayerEnum player, int position) {
         for (Node node : gridpane.getChildren()) {
             if (node instanceof IndexedRegion) {
                 IndexedRegion cell = (IndexedRegion) node;
