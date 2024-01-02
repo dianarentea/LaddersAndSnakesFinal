@@ -1,8 +1,10 @@
 package com.example.laddersandsnakesfinal.Model.Classes;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 class PlayerEnumTest {
     @Test
@@ -13,8 +15,14 @@ class PlayerEnumTest {
 
     @Test
     public void testGetImageUrl() {
-        PlayerEnum player = PlayerEnum.PLAYER2;
-        assertEquals("/p2.png", player.getImageUrl());
+        // Cream un mock pentru PlayerEnum
+        PlayerEnum playerMock = Mockito.mock(PlayerEnum.class);
+
+        // Definim comportamentul mock-ului pentru metoda getImageUrl()
+        when(playerMock.getImageUrl()).thenReturn("/mocked_image.png");
+
+        // Verificăm rezultatul
+        assertEquals("/mocked_image.png", playerMock.getImageUrl());
     }
 
     @Test

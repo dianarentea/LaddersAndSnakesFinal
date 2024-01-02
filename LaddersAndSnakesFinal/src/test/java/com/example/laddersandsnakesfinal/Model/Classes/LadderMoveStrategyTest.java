@@ -10,9 +10,7 @@ import static org.mockito.Mockito.when;
 
 class LadderMoveStrategyTest {
     @Test
-    public void testHandleMove1() {
-        testHandleMove(5, 9);
-    }
+    public void testHandleMove1() {testHandleMove(5, 9);}
     @Test
     public void testHandleMove2() {
         testHandleMove(15, 25);
