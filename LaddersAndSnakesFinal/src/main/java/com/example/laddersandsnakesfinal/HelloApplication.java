@@ -19,12 +19,10 @@ public class HelloApplication extends Application {
         if (controller != null) {
             controller.initialize();
         }
-
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Ladders and Snakes");
         stage.setScene(scene);
         stage.show();
-
     }
 
     public static void main(String[] args) {

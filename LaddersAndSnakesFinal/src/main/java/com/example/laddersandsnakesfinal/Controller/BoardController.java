@@ -1,7 +1,4 @@
 package com.example.laddersandsnakesfinal.Controller;
-
-import com.example.laddersandsnakesfinal.Model.Classes.Board;
-import com.example.laddersandsnakesfinal.Model.Classes.Dice;
 import com.example.laddersandsnakesfinal.Model.Classes.Game;
 import com.example.laddersandsnakesfinal.Model.Classes.PlayerEnum;
 import javafx.animation.KeyFrame;
@@ -16,9 +13,6 @@ import javafx.scene.image.Image ;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.HashMap;
-import java.util.Map;
 @Getter
 @Setter
 public class BoardController {
@@ -110,7 +104,6 @@ public class BoardController {
 
         wintext.setText(currentPlayer.getName() + " has moved!");
     }
-
     void removePlayerImage(int position) {
         for (Node node : gridpane.getChildren()) {
             if (node instanceof IndexedRegion) {
