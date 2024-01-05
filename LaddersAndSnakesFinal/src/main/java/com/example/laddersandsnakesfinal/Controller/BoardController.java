@@ -13,6 +13,11 @@ import javafx.scene.image.Image ;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 @Getter
 @Setter
 public class BoardController {
@@ -23,6 +28,8 @@ public class BoardController {
     private ImageView diceImageView;
     @FXML
     private GridPane gridpane = new GridPane();
+
+    private HashMap<Integer, List<PlayerEnum>> cellPlayerMap = new HashMap<>();
     @FXML
     public void initialize() {
 
@@ -62,7 +69,7 @@ public class BoardController {
         int currentPosition = currentPlayer.getPosition();
 
         int newPosition = game.handlePlayerMove(currentPosition, diceValue);
-        removePlayerImage(currentPosition);
+        removePlayerImage(currentPosition,currentPlayer);
 
         int newPositionSnakeOrLadder = game.handlePlayerMoveSnakeAndLadder(currentPosition, diceValue);
 
@@ -81,7 +88,7 @@ public class BoardController {
                         pause.play();
                     }),
                     new KeyFrame(Duration.millis(1000), event -> {
-                        removePlayerImage(newPosition);
+                        removePlayerImage(newPosition,currentPlayer);
                     })
             );
             timeline1.play();
@@ -104,29 +111,39 @@ public class BoardController {
 
         wintext.setText(currentPlayer.getName() + " has moved!");
     }
-    void removePlayerImage(int position) {
-        for (Node node : gridpane.getChildren()) {
-            if (node instanceof IndexedRegion) {
-                IndexedRegion cell = (IndexedRegion) node;
-                if (cell.getIndex() == position) {
-                    cell.setStyle("");
-                    break;
-                }
-            }
+    void removePlayerImage(int position, PlayerEnum player) {
+        if (cellPlayerMap.containsKey(position)) {
+            List<PlayerEnum> playersOnCell = cellPlayerMap.get(position);
+            playersOnCell.remove(player);
+            updateCellImage(position, playersOnCell);
         }
     }
     void updatePlayerPosition(PlayerEnum player, int position) {
+        cellPlayerMap.putIfAbsent(position, new ArrayList<>());
+        List<PlayerEnum> playersOnCell = cellPlayerMap.get(position);
+        if (!playersOnCell.contains(player)) {
+            playersOnCell.add(player);
+        }
+        updateCellImage(position, playersOnCell);
+
+        player.setPosition(position);
+    }
+    void updateCellImage(int position, List<PlayerEnum> playersOnCell) {
         for (Node node : gridpane.getChildren()) {
-            if (node instanceof IndexedRegion) {
+            if (node instanceof IndexedRegion && ((IndexedRegion) node).getIndex() == position) {
                 IndexedRegion cell = (IndexedRegion) node;
-                if (cell.getIndex() == position) {
-                    String newImageStyle = "-fx-background-image: url('" + player.getImageUrl() + "'); " +
-                            "-fx-background-size: cover;";
-                    cell.setStyle(newImageStyle);
-                    player.setPosition(position);
-                    break;
+                cell.getChildren().clear(); // Curățăm orice conținut existent
+
+                for (PlayerEnum player : playersOnCell) {
+                    ImageView playerImage = new ImageView(new Image(getClass().getResource(player.getImageUrl()).toExternalForm()));
+                    playerImage.setFitHeight(50); // Setează înălțimea imaginii
+                    playerImage.setFitWidth(50); // Setează lățimea imaginii
+                    cell.getChildren().add(playerImage); // Adăugăm imaginea jucătorului în celulă
                 }
+                break;
             }
         }
     }
+
+
 }
