@@ -6,6 +6,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -23,7 +24,7 @@ import java.util.List;
 public class BoardController {
     private Game game = Game.getInstance();
     @FXML
-    private Label wintext;
+    private Label moveText;
     @FXML
     private ImageView diceImageView;
     @FXML
@@ -97,7 +98,20 @@ public class BoardController {
          else {
             if (game.hasPlayerWon(newPosition) == 1)
             {
-                wintext.setText("Player " + currentPlayer.getName() + " has won!");
+                moveText.setText( currentPlayer.getName() + " has won!");
+                // Show an alert
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Game Over");
+                alert.setHeaderText(null);
+                alert.setContentText( currentPlayer.getName() + " has won!");
+
+                // Set the primary stage to close when the alert is closed
+                alert.setOnCloseRequest(event -> gridpane.getScene().getWindow().hide());
+
+                // Show the alert
+                alert.showAndWait();
+
+
                 return;
             }
             Timeline timeline = new Timeline(
@@ -108,8 +122,10 @@ public class BoardController {
             );
             timeline.play();
         }
-
-        wintext.setText(currentPlayer.getName() + " has moved!");
+    if(currentPosition +diceValue <100)
+        moveText.setText(currentPlayer.getName() + " has moved!");
+    else
+        moveText.setText(currentPlayer.getName() + " can't move!");
     }
     void removePlayerImage(int position, PlayerEnum player) {
         if (cellPlayerMap.containsKey(position)) {

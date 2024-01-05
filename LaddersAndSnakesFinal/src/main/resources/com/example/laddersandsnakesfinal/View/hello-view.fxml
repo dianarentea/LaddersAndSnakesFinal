@@ -14,7 +14,7 @@
     
     <GridPane fx:id="gridpane" alignment="CENTER" prefHeight="550.0" prefWidth="550.0" style="-fx-background-size: contain;" />
 
-    <Label fx:id="wintext" />
+    <Label fx:id="moveText" />
 
     <ImageView fx:id="diceImageView" fitHeight="41.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
 
