@@ -11,7 +11,7 @@ public enum PlayerEnum {
     PlayerEnum(String name, String imageUrl) {
         this.name = name;
         this.imageUrl = imageUrl;
-        this.position = 95;
+        this.position = 1;
     }
 
     public void setName(String name) {
