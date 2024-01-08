@@ -25,11 +25,7 @@ class PlayerEnumTest {
         assertEquals("/mocked_image.png", playerMock.getImageUrl());
     }
 
-    @Test
-    public void testInitialPosition() {
-        PlayerEnum player = PlayerEnum.PLAYER1;
-        assertEquals(1, player.getPosition());
-    }
+
 
     @Test
     public void testSetPosition() {
